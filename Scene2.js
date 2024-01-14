@@ -59,6 +59,43 @@ class Scene2 extends Phaser.Scene {
             font: "25px Arial",
             fill: "black"
         });
+
+        this.anims.create({
+            key: "red",
+            frames: this.anims.generateFrameNumbers("power-up", {
+                start: 0,
+                end: 1
+            }),
+            framerate: 20,
+            repeat: -1
+        });
+        this.anims.create({
+            key: "gray",
+            frames: this.anims.generateFrameNumbers("power-up", {
+                start: 2,
+                end: 3
+            }),
+            framerate: 20,
+            repeat: -1
+        });
+        this.powerUps = this.physics.add.group();
+
+        var maxObjects = 4;
+        for (var i = 0; i <= maxObjects; i++) {
+            var powerUp = this.physics.add.sprite(16,16, "power-up");
+            this.powerUps.add(powerUp)
+            powerUp.setRandomPosition(0,0, this.game.config.width, this.game.config.height);
+
+            if (Math.random() > 0.5) {
+                powerUp.play("red");
+            } else {
+                powerUp.play("gray");
+            }
+
+            powerUp.setVelocity(100,100);
+            powerUp.setCollideWorldBounds(true);
+            powerUp.setBounce(true)
+        }
     }
 
     moveShip(ship, speed){
@@ -88,5 +125,20 @@ class Scene2 extends Phaser.Scene {
         this.moveShip(this.ship2, 2);
         this.moveShip(this.ship3, 3);
         this.background.tilePositionY -= 0.2;
+    }
+
+    cameraUpdate() {
+        app.update()
+        const camera = this.cameras.main
+        camera.setZoom(app.zoom)
+        camera.centerOn(app.centerX, app.centerY)
+    }
+
+    resize() {
+        this.cameraUpdate()
+        // all sprite update
+        for (let index = 0; index < this.imageList.length; index++) {
+            this.imageList[index].update()
+        }
     }
 }
