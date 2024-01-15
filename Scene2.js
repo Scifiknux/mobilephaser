@@ -7,6 +7,10 @@ class Scene2 extends Phaser.Scene {
         this.background = this.add.tileSprite(0,0,this.game.config.width,this.game.config.height,"background");
         this.background.scale = 8;
         this.background.setOrigin(0,0);
+        this.backgroundClouds = this.add.tileSprite(0,0,this.game.config.width,this.game.config.height,"backgroundClouds");
+        this.backgroundClouds.scale = 8;
+        this.backgroundClouds.setOrigin(0,0);
+        this.backgroundClouds.blendMode = Phaser.BlendModes.SCREEN;
 
         this.ship1 = this.add.sprite(this.game.config.width/2 - 50, this.game.config.height/2, "ship");
         this.ship2 = this.add.sprite(this.game.config.width/2, this.game.config.height/2, "ship2");
@@ -125,6 +129,7 @@ class Scene2 extends Phaser.Scene {
         this.moveShip(this.ship2, 2);
         this.moveShip(this.ship3, 3);
         this.background.tilePositionY -= 0.2;
+        this.backgroundClouds.tilePositionY -=.3;
     }
 
     cameraUpdate() {
