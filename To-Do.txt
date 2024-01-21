@@ -1,0 +1,1 @@
+Add global variables that can be defined in game.js and passed to scenes.
