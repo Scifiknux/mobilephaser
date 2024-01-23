@@ -5,7 +5,6 @@ window.onload = function() {
         height: window.innerHeight,
         backgroundColor: 0x507D2A,
         playerSpeed: 200,
-        customVariable: true,
         scene: [Scene1, Scene2],
         pixelArt: true,
         physics: {
