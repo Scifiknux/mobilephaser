@@ -35,10 +35,20 @@ class Scene2 extends Phaser.Scene {
 
         this.input.on('gameobjectdown', this.destroyShip, this);
 
-        this.add.text(20,20, "Playing game", {
-            font: "25px Arial",
-            fill: "black"
-        });
+        var graphics = this.add.graphics();
+        graphics.fillStyle(0x000000, 1);
+        graphics.beginPath();
+        graphics.moveTo(0,0);
+        graphics.lineTo(this.game.config.width, 0);
+        graphics.lineTo(this.game.config.width, 20);
+        graphics.lineTo(0, 20);
+        graphics.lineTo(0, 0);
+        graphics.closePath();
+        graphics.fillPath();
+
+        this.score = 0;
+
+        this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE ", 16);
 
         this.anims.create({
             key: "red",
@@ -96,9 +106,21 @@ class Scene2 extends Phaser.Scene {
 
     }
 
+    zeroPad(number, size){
+        var stringNumber = String(number);
+        while(stringNumber.length < (size || 1)) {
+            console.log("Stringnumber: " + stringNumber);
+            stringNumber = "0" + stringNumber;
+        }
+        return stringNumber;
+    }
+
     hitEnemy(projectile, enemy){
         projectile.destroy();
         this.resetShipPos(enemy);
+        this.score += 1;
+        var scoreFormatted = this.zeroPad(this.score, 6);
+        this.scoreLabel.text = "SCORE " + scoreFormatted;
     }
 
     hurtPlayer(player, enemy){
@@ -149,7 +171,8 @@ class Scene2 extends Phaser.Scene {
             projectile.update();
         });
 
-        console.log("Number of beams: " + this.projectiles.countActive());
+        //console.log("Number of beams: " + this.projectiles.countActive());
+        //console.log("Score: " + this.score);
 
     }
 
