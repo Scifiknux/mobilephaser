@@ -127,6 +127,9 @@ class Scene2 extends Phaser.Scene {
         this.resetShipPos(enemy);
         player.x = this.game.config.width / 2 - 8;
         player.y = this.game.config.height - 64;
+        this.score -= 30;
+        var scoreFormatted = this.zeroPad(this.score, 6);
+        this.scoreLabel.text = "SCORE " + scoreFormatted;
     }
 
     pickPowerUp(player, powerUp){
@@ -137,6 +140,9 @@ class Scene2 extends Phaser.Scene {
         ship.y += speed;
         if (ship.y > this.game.config.height) {
             this.resetShipPos(ship);
+            this.score -= 3;
+            var scoreFormatted = this.zeroPad(this.score, 6);
+            this.scoreLabel.text = "SCORE " + scoreFormatted;
         }
     }
 
