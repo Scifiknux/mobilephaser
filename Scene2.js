@@ -134,11 +134,11 @@ class Scene2 extends Phaser.Scene {
 
     pickPowerUp(player, powerUp){
         powerUp.disableBody(true, true);
-        if (score <= 1){
-            score = 0;
+        if (this.score <= 1){
+            this.score = 0;
         }
         else {
-            score = score * 2;
+            this.score = score * 2;
         }
     };
 
