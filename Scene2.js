@@ -132,18 +132,17 @@ class Scene2 extends Phaser.Scene {
         this.scoreLabel.text = "SCORE " + scoreFormatted;
     }
 
-    pickPowerUp(player, powerUp){
+    pickPowerUp(player, powerUp) {
         powerUp.disableBody(true, true);
-        if (this.score <= 1){
+    
+        if (this.score < 0) {
             this.score = 0;
-            var scoreFormatted = this.zeroPad(this.score, 6);
-            this.scoreLabel.text = "SCORE " + scoreFormatted;
+        } else {
+            this.score *= 2;
         }
-        else {
-            this.score = this.score * 2;
-            var scoreFormatted = this.zeroPad(this.score, 6);
-            this.scoreLabel.text = "SCORE " + scoreFormatted;
-        }
+    
+        var scoreFormatted = this.zeroPad(this.score, 6);
+        this.scoreLabel.text = "SCORE " + scoreFormatted;
     };
 
     moveShip(ship, speed){
