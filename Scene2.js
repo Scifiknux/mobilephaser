@@ -140,7 +140,7 @@ class Scene2 extends Phaser.Scene {
             this.scoreLabel.text = "SCORE " + scoreFormatted;
         }
         else {
-            this.score = score * 2;
+            this.score = this.score * 2;
             var scoreFormatted = this.zeroPad(this.score, 6);
             this.scoreLabel.text = "SCORE " + scoreFormatted;
         }
