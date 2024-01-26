@@ -136,9 +136,13 @@ class Scene2 extends Phaser.Scene {
         powerUp.disableBody(true, true);
         if (this.score <= 1){
             this.score = 0;
+            var scoreFormatted = this.zeroPad(this.score, 6);
+            this.scoreLabel.text = "SCORE " + scoreFormatted;
         }
         else {
             this.score = score * 2;
+            var scoreFormatted = this.zeroPad(this.score, 6);
+            this.scoreLabel.text = "SCORE " + scoreFormatted;
         }
     };
 
