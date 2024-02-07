@@ -116,6 +116,9 @@ class Scene2 extends Phaser.Scene {
     }
 
     hitEnemy(projectile, enemy){
+
+        var explosion = new Explosion(this, enemy.x, enemy.y, enemy.scale);
+
         projectile.destroy();
         this.resetShipPos(enemy);
         this.score += 1;
@@ -124,17 +127,43 @@ class Scene2 extends Phaser.Scene {
     }
 
     hurtPlayer(player, enemy){
+
+        
         this.resetShipPos(enemy);
-        player.x = this.game.config.width / 2 - 8;
-        player.y = this.game.config.height - 64;
-        this.score -= 30;
-        var scoreFormatted = this.zeroPad(this.score, 6);
-        this.scoreLabel.text = "SCORE " + scoreFormatted;
+
+        var explosion = new Explosion(this, player.x, player.y, 1);
+        player.disableBody(true,true);
+
+        this.timedEvent = this.time.addEvent({delay: 1000, callback: this.resetPlayer, callbackScope: this, loop: false});
+        // this.score -= 30;
+        // var scoreFormatted = this.zeroPad(this.score, 6);
+        // this.scoreLabel.text = "SCORE " + scoreFormatted;
+    }
+
+    resetPlayer(){
+        var x = window.innerWidth / 2 - 8;
+        var y = window.innerHeight + 64;
+        console.log("X: " + x + " Y: " + y);
+        this.player.enableBody(true,x,y,true,true);
+
+        this.player.alpha = 0.5;
+
+        var tween = this.tweens.add({
+            targets: this.player,
+            y: this.game.config.height - 64,
+            ease: 'Power1',
+            duration: 1500,
+            repeat:0,
+            onComplete: function(){
+                this.player.alpha = 1;
+            },
+            callbackScope: this
+        });
     }
 
     pickPowerUp(player, powerUp) {
         powerUp.disableBody(true, true);
-    
+        this.game.config.playerSpeed *= 1.2;
         if (this.score < 0) {
             this.score = 0;
         } else {
@@ -179,7 +208,9 @@ class Scene2 extends Phaser.Scene {
         this.movePlayerManager();
 
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)){
-            this.shootBeam();
+            if(this.player.active){
+                this.shootBeam();
+            }
         }
         
         this.projectiles.children.each(function(projectile){

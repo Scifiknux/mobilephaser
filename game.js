@@ -4,7 +4,6 @@ window.onload = function() {
         width: window.innerWidth,
         height: window.innerHeight,
         backgroundColor: 0x507D2A,
-        //playerSpeed: 200,
         scene: [Scene1, Scene2],
         pixelArt: true,
         physics: {
